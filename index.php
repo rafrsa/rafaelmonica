@@ -8,9 +8,14 @@
 		<script type="text/javascript" src="jquery.flipcountdown.js"></script>
 		<link rel="stylesheet" type="text/css" href="jquery.flipcountdown.css" />
 
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+<!--        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />-->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 
 		<script>
@@ -59,6 +64,30 @@
 						beforeDateTime:'05/12/2018 18:00:00'			
 					});
 				});
+
+				function SalvaDepoimento()
+                {
+                    var nome = $("#txtNome").val();
+                    var depo = $("#txtDepo").val();
+
+                    $.ajax({
+                        method: "POST",
+                        url: "salvadb.php",
+                        data: { depo: depo, nome:nome }
+                    })
+                        .done(function( msg ) {
+                            if(msg)
+                            {
+                                alert("Depoimento salvo com sucesso!");
+                                location.reload();
+                            }
+                            else
+                            {
+                                alert("Ocorreu um erro tente novamente!");
+                            }
+                        });
+                }
+
 			</script>
 			
 			<style>
@@ -92,62 +121,48 @@
                     margin: 0px auto;
                 }
 
-                .inner{
-
-                    float: left;
-                    width: 100%;
-
-                    width: 400px;
-                    height: 200px;
-                    background-color: white;
-                    margin-left: 50px;
-                    margin-top: 15px;
-                    border-radius: 10px;
-                    border: 1px solid gray;
+                .box {
+                    margin: 15px;
+                    padding: 15px;
+                    transform: rotateZ(2deg);
+                    background-color: whitesmoke;
                 }
 
-                @media (min-width:100%){
-                    .inner{
-                        width: 50%;
-                    }
+                .box2 {
+                    margin: 15px;
+                    padding: 15px;
+                    transform: rotateZ(-2deg);
+                    background-color: whitesmoke;
+                }
 
+                .pin {
+                    max-width: 20%;
+                    position: absolute;
+                    transform: translate(-50px, -50px) rotateY(180deg);
+                }
 
-                    .box {
-                        margin: 15px;
-                        padding: 15px;
-                        transform: rotateZ(1deg);
-                    }
+                .branco {
+                    margin-top: 40px;
+                }
 
-                    .pin {
-                        max-width: 20%;
-                        position: absolute;
-                        transform: translate(-50px, -50px) rotateY(180deg);
+                .card-1 {
+                    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+                }
 
-                    }
-
-                    .branco {
-                        margin-top: 40px;
-                    }
-
-                    .card-1 {
-                        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-                        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-                    }
-
-                    .card-1:hover {
-                        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-                    }
-
-
-
+                .card-1:hover {
+                    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+                }
             </style>
 		</div>
+        <hr>
+
+        <h2 class="aviso">Deixe uma mensagem para os noivos!</h2>
         
         <?php
             $con = mysqli_connect("br52.hostgator.com.br","rafae415_user","admin","rafae415_rafaelmonica");
             $sql = "select * from depoimentos";
-            $res = mysqli_query($con,$sql)->fetch_assoc();
-
+            $res = mysqli_query($con,$sql);
         ?>
 
         <div class="container branco">
@@ -155,10 +170,24 @@
 
 
         <?php
-        foreach ($res as $key => $value) { ?>
-            <div class="col-md-3 box card-1 animated fadeIn">
-                <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/pin-icon.png" class="pin" alt="">
-                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto a <mark>maiores</mark> omnis ipsum. Voluptatum earum reiciendis animi magni nam numquam architecto repudiandae ducimus quod aspernatur. Quaerat amet placeat molestiae laborum.</div>
+
+        $contador = 1;
+
+        while($depo = $res->fetch_assoc()) {
+
+            if($contador%2==0)
+            {
+                echo '<div class="col-md-3 box card-1 animated FadeIn">';
+            }
+            else
+            {
+                echo '<div class="col-md-3 box2 card-1 animated FadeIn">';
+            }
+            $contador++;
+            ?>
+<!--                <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/pin-icon.png" class="pin" alt="">-->
+                <div style="background-color: #fff4ed; border: 1px solid #ffe6d1; width: 100%; height: 30px; padding: 3px 0px 0px 5px"><?php echo $depo['nome']; ?></div>
+                <div><?php echo $depo['depoimento']; ?></div>
             </div>
             <?php }
         ?>
@@ -167,8 +196,11 @@
 
     <div class="clearfix"></div>
     <div style="text-align: center; margin-top: 50px">
-        <input type="text" style="width: 300px;"/>
-        <input type="button" value="Salvar"/>
+        <table align="center">
+            <tr><td><input type="text" id="txtNome" style="width: 300px" placeholder="Seu nome"/></td></tr>
+            <tr><td><textarea id="txtDepo" style="width: 300px; height: 100px" placeholder="Seu depoimento"></textarea></td></tr>
+            <tr><td><input type="button" onclick="SalvaDepoimento();" id="btnSalvar" class="btn btn-info" value="Salvar" style=""/></td></tr>
+        </table>
     </div>
 	</body>
 </html>
