@@ -8,7 +8,8 @@
 		<script type="text/javascript" src="jquery.flipcountdown.js"></script>
 		<link rel="stylesheet" type="text/css" href="jquery.flipcountdown.css" />
 
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
@@ -110,7 +111,36 @@
                         width: 50%;
                     }
 
-			</style>
+
+                    .box {
+                        margin: 15px;
+                        padding: 15px;
+                        transform: rotateZ(1deg);
+                    }
+
+                    .pin {
+                        max-width: 20%;
+                        position: absolute;
+                        transform: translate(-50px, -50px) rotateY(180deg);
+
+                    }
+
+                    .branco {
+                        margin-top: 40px;
+                    }
+
+                    .card-1 {
+                        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+                        transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+                    }
+
+                    .card-1:hover {
+                        box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+                    }
+
+
+
+            </style>
 		</div>
         
         <?php
@@ -120,16 +150,20 @@
 
         ?>
 
-    <div style="width: 100%;">
+        <div class="container branco">
+            <div class="row">
+
 
         <?php
-        foreach ($res as $key => $value) {
-                echo '<div class="inner">
-                        <div style="100%;height: 30px; border-bottom: 2px solid gray;"></div>
-                    </div>';
-            }
+        foreach ($res as $key => $value) { ?>
+            <div class="col-md-3 box card-1 animated fadeIn">
+                <img src="http://icons.iconarchive.com/icons/paomedia/small-n-flat/1024/pin-icon.png" class="pin" alt="">
+                <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto a <mark>maiores</mark> omnis ipsum. Voluptatum earum reiciendis animi magni nam numquam architecto repudiandae ducimus quod aspernatur. Quaerat amet placeat molestiae laborum.</div>
+            </div>
+            <?php }
         ?>
-    </div>
+            </div>
+        </div>
 
     <div class="clearfix"></div>
     <div style="text-align: center; margin-top: 50px">
