@@ -8,7 +8,8 @@
 		<script type="text/javascript" src="jquery.flipcountdown.js"></script>
 		<link rel="stylesheet" type="text/css" href="jquery.flipcountdown.css" />
 
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" />
         <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
@@ -149,7 +150,6 @@
 
         ?>
 
-    <div style="width: 100%;">
         <div class="container branco">
             <div class="row">
 
@@ -164,7 +164,6 @@
         ?>
             </div>
         </div>
-    </div>
 
     <div class="clearfix"></div>
     <div style="text-align: center; margin-top: 50px">
